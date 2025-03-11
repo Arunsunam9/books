@@ -50,60 +50,13 @@
 //   }
 // }
 
-import { NextResponse } from "next/server";
+import { NextResponse , NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { uploadToCloudinary } from "@/lib/cloudinery";
+// import formidable from "formidable";
+// import fs from "fs/promises";
 
 const prisma = new PrismaClient();
-
-// // UPDATE API to edit a product by ID
-// export async function PUT(
-//   req: Request,
-//   { params }: { params: { id: string } }
-// ) {
-//   console.log("params:", params);
-//   try {
-//     const productId = params.id;
-  
-
-//     const body = await req.json();
-//     const { name, price } = body;
-
-//     if (!name || !price) {
-//       return NextResponse.json(
-//         { message: "All fields are required" },
-//         { status: 400 }
-//       );
-//     }
-
-//     // Check if product exists
-//     const existingProduct = await prisma.product.findUnique({
-//       where: { id: productId },
-//     });
-//     if (!existingProduct) {
-//       return NextResponse.json(
-//         { message: "Product not found" },
-//         { status: 404 }
-//       );
-//     }
-
-//     // Update product
-//     await prisma.product.update({
-//       where: { id: productId },
-//       data: { name, price },
-//     });
-
-//     return NextResponse.json(
-//       { message: "Product updated successfully" },
-//       { status: 200 }
-//     );
-//   } catch (error) {
-//     console.error("Error updating product:", error);
-//     return NextResponse.json(
-//       { message: "Error updating product" },
-//       { status: 500 }
-//     );
-//   }
-// }
 
 export async function GET() {
   try {
@@ -119,14 +72,23 @@ export async function GET() {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     // Parse the incoming JSON request body
-    const body = await req.json();
-    const { name, price } = body;
+    const body = await req.formData();
+    // const { name, price, image, description } = body;
+    const name = body.get("name") as string;
+    const price = body.get("price") as string ;
+      const description = body.get("description") as string;
+      const image = body.get("image") as File;
+
+
+
+    
+    console.log("image:", image);
 
     // Validate that both name and price are provided
-    if (!name || !price) {
+    if (!name || !price || !description || !image) {
       return NextResponse.json(
         { message: "All fields are required!" },
         { status: 400 }
@@ -134,13 +96,22 @@ export async function POST(req: Request) {
     }
 
     // Log the received data (for debugging purposes)
-    console.log("Received product data", { name, price });
+    console.log("Received product data", { name, price, image, description });
+
+    let imageUrl = null;
+    if (image) {
+    const cloudineryResult = await uploadToCloudinary(image) as {secure_url:string}; 
+    imageUrl = cloudineryResult.secure_url;
+    }
+
 
     // Create the new product in the database
     const newProduct = await prisma.product.create({
       data: {
         name,
         price: parseFloat(price), // Ensure price is a number
+        image: imageUrl!,
+        description,
       },
     });
 

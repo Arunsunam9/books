@@ -112,9 +112,9 @@ export default function LoginPage() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <form
         onSubmit={handleSubmit}
-        className="p-6 bg-white shadow-lg rounded-lg w-96"
+        className="p-10 shadow-lg rounded-lg w-96"
       >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-xl  font-serif mb-10">Login to Books&stationery</h2>
 
         {error && (
           <p className="text-red-500 mb-2">{error}</p> // Error message styling
@@ -125,7 +125,7 @@ export default function LoginPage() {
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full p-2 border rounded mb-2"
+          className="w-full p-2 border rounded mb-3"
           required
         />
         <input
@@ -135,7 +135,7 @@ export default function LoginPage() {
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
-          className="w-full p-2 border rounded mb-2"
+          className="w-full p-2 border rounded mb-10"
           required
         />
         <button
@@ -144,14 +144,15 @@ export default function LoginPage() {
         >
           Login
         </button>
+        <p className="text-center mt-4">
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-500">
+            Sign up
+          </a>
+        </p>
       </form>
 
-      <p className="text-center mt-4">
-        Don't have an account?{" "}
-        <a href="/signup" className="text-blue-500">
-          Sign up
-        </a>
-      </p>
+     
     </div>
   );
 }

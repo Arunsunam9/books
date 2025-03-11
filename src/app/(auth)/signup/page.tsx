@@ -98,15 +98,60 @@ export default function SignupPage() {
   };
 
   return (
-    <div>
-      <h1>Sign Up</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    // <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    //   {error && (
+    //     <p className="text-red-500 mb-2">{error}</p> // Error message styling
+    //   )}
+    //   <form onSubmit={handleSubmit} className="p-10 shadow-lg rounded-lg w-96">
+    //     <h2 className="text-xl  font-serif mb-10">Sign Up</h2>
+    //     <input
+    //       type="email"
+    //       placeholder="Email"
+    //       value={formData.email}
+    //       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+    //       className="w-full p-2 border rounded mb-3"
+    //       required
+    //     />
+    //     <input
+    //       type="password"
+    //       placeholder="Password"
+    //       value={formData.password}
+    //       onChange={(e) =>
+    //         setFormData({ ...formData, password: e.target.value })
+    //       }
+    //       className="w-full p-2 border rounded mb-10"
+    //       required
+    //     />
+    //     <input
+    //       type="text"
+    //       placeholder="Name (optional)"
+    //       value={formData.name}
+    //       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+    //     />
+    //     <p className="text-center mt-4">
+    //       <button type="submit">Sign Up</button>
+    //     </p>
+    //   </form>
+    // </div>
+
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <form onSubmit={handleSubmit} className="p-10 shadow-lg rounded-lg w-96">
+        <h2 className="text-xl font-serif mb-10">Create Your Account</h2>
+        {error && <p className="text-red-500 mb-2">{error}</p>}{" "}
+        {/* Error message styling */}
+        <input
+          type="text"
+          placeholder="Name (optional)"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className="w-full p-2 border rounded mb-3"
+        />
         <input
           type="email"
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="w-full p-2 border rounded mb-3"
           required
         />
         <input
@@ -116,15 +161,21 @@ export default function SignupPage() {
           onChange={(e) =>
             setFormData({ ...formData, password: e.target.value })
           }
+          className="w-full p-2 border rounded mb-10"
           required
         />
-        <input
-          type="text"
-          placeholder="Name (optional)"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <button type="submit">Sign Up</button>
+        <button
+          type="submit"
+          className="w-full p-2 rounded bg-blue-500 text-white"
+        >
+          Sign Up
+        </button>
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-500">
+            Login
+          </a>
+        </p>
       </form>
     </div>
   );

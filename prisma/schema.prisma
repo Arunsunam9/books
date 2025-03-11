@@ -29,6 +29,8 @@ model Product {
   id       String   @id @default(uuid())
   name     String
   price    Float
+  image       String  // Image URL or file path
+  description String
   createdAt DateTime @default(now())
 }
 
@@ -47,3 +49,8 @@ enum Role {
   admin
   user
 }  
+
+
+
+
+
